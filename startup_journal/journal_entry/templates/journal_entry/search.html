@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load journal_entry_tags %}
+
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+  {% if query %}
+    <h1>Entries containing "{{ query }}"</h1>
+    <h3>
+      {% with results.count as total_results %}
+          Found {{ total_results }} result{{ total_results|pluralize }}
+      {% endwith %}
+    </h3>
+    {% for entry in results %}
+        <h4><a href="{% url 'journal_entry:entry' entry.id %}">{{ entry.date_added|date:'M d, Y' }}</a></h4>
+        {{ entry.text|markdown|truncatewords_html:5 }}
+    {% empty %}
+      <p>There are no results for your query.</p>
+    {% endfor %}
+    <div class="button-container">
+      <a href="{% url "journal_entry:entry_search" %}" class="button-link"><input type="submit" value="Search again"</a>
+      <a href="{% url "journal_entry:entries" %}" class="button-link"><input type="submit" value="Cancel"></a>
+    </div>
+
+  {% else %}
+    <h1>Search for entries</h1>
+    <p>Enter your search keywords separated by commas.</p>
+    <br>
+    <form method="get">
+      {{ form.as_p }}
+
+      <input type="submit" value="Search">
+      <input type="button" value="Cancel" onclick="history.back()">
+
+    </form>
+
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load journal_entry_tags %}
+
+{% block title %}Journal Entry{% endblock %}
+
+{% block content %}
+  <h1>{{ entry.date_added|date:'M d, Y H:i' }}</h1>
+
+  <p>{{ entry.text|markdown }}</p>
+
+  <p class="date">
+    Tags:
+    {% for tag in entry.tags.all %}
+      <a href="{% url "journal_entry:entries_by_tag" tag.slug %}">
+        {{ tag.name }}
+      </a>
+      {% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </p>
+
+  <br>
+
+  <div class="button-container">
+    <a href="{% url "journal_entry:edit_entry" entry.id %}" class="button-link"><input type="submit" value="Edit entry"></a>
+    <a href="{% url "journal_entry:entries" %}" class="button-link"><input type="submit" value="Back"></a>
+  </div>
+
+
+{% endblock %}

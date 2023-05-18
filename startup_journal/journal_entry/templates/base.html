@@ -1,0 +1,88 @@
+{% load journal_entry_tags %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static "css/journal.css" %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<body>
+  <div id="container">
+    <div id="sidebar">
+      <br>
+
+      <div id="datepicker">
+      <script src="https://unpkg.com/js-datepicker"></script>
+      {#<script src="https://raw.githubusercontent.com/qodesmith/datepicker/master/dist/datepicker.min.js"></script>#}
+      <script>
+        {% if year %}
+          var currentDate = new Date({{ year }} + '-' + {{ month }} + '-'+ {{ day }})
+        {% endif %}
+
+        var picker = datepicker("#datepicker", {
+            onSelect: function (instance, date) {
+                console.log(date.toISOString().split('T')[0]);
+                window.location.href = "/date/" + date.toISOString().split('T')[0];
+              },
+            alwaysShow: true,
+            dateSelected: typeof currentDate !== 'undefined' ? currentDate : new Date(),
+            maxDate: new Date(),
+        })
+      </script>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+
+      <div>
+        <strong>Tags:</strong>
+        {% get_tags %}
+        <br><br>
+      </div>
+
+      <div>
+        <strong>Profile:</strong>
+        {% if user.is_authenticated %}
+          <p>Hello, {{ user.first_name }}!</p>
+          <p>{{ user.email }}</p>
+          <a href="{% url 'users:logout' %}">Log out</a>
+        {% else %}
+          <p><a href="{% url 'users:register' %}">Register</a> - <a href="{% url 'users:login' %}">Log in</a></p>
+        {% endif %}
+        <br><br>
+      </div>
+
+    </div>
+
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+  <style media="screen">
+    @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    #sidebar {
+      display: none
+    }
+  }
+
+  </style>
+  <!-- Copyright -->
+  <footer id="footer">Copyright &copy;
+    <script type="text/JavaScript">
+    document.write(new Date().getFullYear());
+    </script> |
+    <a href="https://www.startupjournal.io" target="_blank">Startup Journal</a>
+  </footer>
+  <!-- Copyright -->
+
+</body>
+</html>

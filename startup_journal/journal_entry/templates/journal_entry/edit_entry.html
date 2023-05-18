@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Edit Journal Entry</h1>
+
+  <p>Edit journal entry below:</p>
+  <form action="{% url 'journal_entry:edit_entry' entry.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+      <input type="submit" value="Save changes">
+      <input type="button" value="Cancel" onclick="history.back()">
+
+  </form>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('select[name="tags"]').select2({
+          width: '54%' // need to override the changed default
+        });
+    });
+  </script>
+
+{% endblock %}
+
+  <!-- To Delete -->
+  <!-- <a href="{% url "journal_entry:entry" entry.id %}"><input type="submit" value="Cancel"></a> -->

@@ -1,0 +1,31 @@
+{% extends "header.html" %}
+{% load bootstrap4 %}
+
+
+{% block page_header %}
+{% if user.is_authenticated %}
+  <h2>Hey {{user.username}}!</h2>
+{% else %}
+  <h2>Log in to your account.</h2>
+{% endif %}
+{% endblock page_header %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <p class="lead">Looks like you're still logged in!</p>
+  <p>Click <a href="{% url 'journal_entry:entries' %}">here</a> to go back to your journal page.</p>
+{% else %}
+  <form method="post" action="{% url 'users:login' %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">Log in</button>
+    {% endbuttons %}
+    <!-- redirect users to the entries list view after logging in. -->
+    <input type="hidden" name="next" value="{% url 'journal_entry:entries' %}">
+  </form>
+{% endif %}
+
+
+{% endblock content %}

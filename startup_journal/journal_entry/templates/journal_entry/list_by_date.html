@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load journal_entry_tags %}
+
+
+{% block title %}My Journal{% endblock %}
+
+{% block content %}
+  {% if entries %}
+    <h1>My Journal Entries for {{ day }}/{{ month }}/{{ year }}</h1>
+  {% else %}
+    <h1>You have no entries for {{ day }}/{{ month }}/{{ year }}</h1>
+  {% endif %}
+
+  <div class="button-container">
+    <a href="{% url "journal_entry:new_entry" %}" class="button-link"><input type="submit" value="Add New entry"></a>
+    <a href="{% url "journal_entry:entry_search" %}" class="button-link"><input type="submit" value="Search"></a>
+    <a href="{% url "journal_entry:entries" %}" class="button-link"><input type="submit" value="Back"></a>
+  </div>
+
+  {% if tag %}
+    <h2>Entries tagged with "{{ tag.name }}"</h2>
+  {% endif %}
+
+  {% if entries %}
+    {% for entry in entries %}
+    <div class="card-entry">
+      <div class="card-header">
+        <h2>
+          <a href="{% url 'journal_entry:entry' entry.id %}">{{ entry.date_added|date:'M d, Y h:i A' }}</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <p class="date">
+          Tags:
+          {% for tag in entry.tags.all %}
+            <a href="{% url "journal_entry:entries_by_tag" tag.slug %}">
+              {{ tag.name }}
+            </a>
+            {% if not forloop.last %}, {% endif %}
+          {% endfor %}
+          {{ entry.text|markdown|truncatewords_html:80 }}
+        </p>
+      </div>
+    </div>
+      {% if not forloop.last %}<br> {% endif %}
+    {% endfor %}
+    {% include "pagination.html" with page=entries %}
+  {% else %}
+    <h2>Pick another date, or choose an option above.</h2>
+  {% endif %}
+
+
+{% endblock %}

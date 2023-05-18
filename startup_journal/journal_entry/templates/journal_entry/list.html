@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load journal_entry_tags %}
+
+{% block title %}My Journal{% endblock %}
+
+{% block content %}
+
+  <h1>My Journal Entries</h1>
+
+  <div class="button-container">
+    <a href="{% url "journal_entry:new_entry" %}" class="button-link"><input type="submit" value="Add New entry"></a>
+    <a href="{% url "journal_entry:entry_search" %}" class="button-link"><input type="submit" value="Search"></a>
+    {% if tag %}
+      <a href="{% url "journal_entry:entries" %}" class="button-link"><input type="submit" value="Back"></a>
+    {% endif %}
+  </div>
+
+  {% if tag %}
+    <h2>Entries tagged with "{{ tag.name }}"</h2>
+  {% endif %}
+  {% for entry in entries %}
+    <h2>
+      <a href="{% url 'journal_entry:entry' entry.id %}">{{ entry.date_added|date:'M d, Y' }}</a>
+    </h2>
+    <p class="date">
+      Tags:
+      {% for tag in entry.tags.all %}
+        <a href="{% url "journal_entry:entries_by_tag" tag.slug %}">
+          {{ tag.name }}
+        </a>
+        {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endfor %}
+  {% include "pagination.html" with page=entries %}
+
+
+{% endblock %}

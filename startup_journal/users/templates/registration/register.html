@@ -1,0 +1,32 @@
+{% extends "header.html" %}
+{% load bootstrap4 %}
+{% load bootstrap_filters %}
+
+
+{% block page_header %}
+{% if user.is_authenticated %}
+  <h2>Hey {{user.username}}!</h2>
+{% else %}
+  <h2>Register to create your account.</h2>
+{% endif %}
+{% endblock page_header %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <p class="lead">You are currently logged in!</p>
+  <p>Make sure you <a href="{% url 'users:logout' %}">logout</a> before you register for a new account.</p>
+{% else %}
+  <form method="post" action="{% url 'users:register' %}" class="form">
+    {% csrf_token %}
+    {{ user_form|bootstrap }}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">Register</button>
+    {% endbuttons %}
+    <!-- redirect users to the entries list view after logging in. -->
+
+    <input type="hidden" name="next" value="{% url 'journal_entry:entries' %}">
+  </form>
+{% endif %}
+
+{% endblock content %}

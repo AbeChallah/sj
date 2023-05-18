@@ -1,0 +1,183 @@
+body {
+    margin:0;
+    padding:0;
+    font-family:helvetica, sans-serif;
+}
+
+a {
+    color:#00abff;
+    text-decoration:none;
+}
+
+h1 {
+    font-weight:normal;
+    border-bottom:1px solid #bbb;
+    padding:0 0 10px 0;
+}
+
+h2 {
+    font-weight:normal;
+    margin:30px 0 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+}
+
+#content {
+    width:75%;
+    padding:0 0 0 30px;
+}
+
+#sidebar {
+    width:25%;
+    padding:10px;
+    background:#efefef;
+    min-height:100%;
+}
+
+p.date {
+    color:#ccc;
+    font-family: georgia, serif;
+    font-size: 12px;
+    font-style: italic;
+    /* adjust this to fix the space below the tags in card entries */
+    padding-bottom:5px;
+}
+
+/* pagination */
+.pagination {
+    margin:40px 0;
+    font-weight:bold;
+}
+
+/* forms */
+label {
+    float:left;
+    clear:both;
+    color:#333;
+    margin-top:4px;
+    margin-right:4px;
+    margin-bottom:4px;
+}
+input, textarea {
+    clear:both;
+    float:left;
+    margin:0 0 10px;
+    background:#ededed;
+    border:0;
+    padding:6px 10px;
+    font-size:12px;
+}
+input[type=submit] {
+    font-weight:bold;
+    background:#00abff;
+    color:#fff;
+    padding:10px 20px;
+    font-size:14px;
+    text-transform:uppercase;
+    border-radius: 4px;
+}
+
+input[type=button] {
+    font-weight:bold;
+    background:#00abff;
+    color:#fff;
+    padding:10px 20px;
+    font-size:14px;
+    text-transform:uppercase;
+    margin: 0 10px;
+    clear: none;
+    display: inline;
+    border-radius: 4px;
+}
+
+.errorlist {
+    color:#cc0033;
+    float:left;
+    clear:both;
+    padding-left:10px;
+}
+
+/* comments */
+.comment {
+    padding:10px;
+}
+.comment:nth-child(even) {
+    background:#efefef;
+}
+.comment .info {
+    font-weight:bold;
+    font-size:12px;
+    color:#666;
+}
+
+/* buttons */
+
+.button-container input {
+  display: inline-block;
+}
+
+.button-link {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+
+/* display form buttons side by side */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* card entries */
+.card-entry {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 0;
+  max-width: 600px; /* Change this value to adjust to my design */
+  box-sizing: border-box;
+}
+
+.card-header {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-entry h2 {
+  margin: 0;
+}
+
+.card-entry p.date {
+  margin: 0;
+}
+
+
+/* sidebars */
+#sidebar .qs-datepicker-container {
+    box-shadow: none;
+}
+
+
+/* footer */
+#footer {
+    text-align: center;
+    font-size: 0.8em;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #FFFFFF;
+    border-top: thin solid #BBBBBB;
+    clear: both;
+    color: #969696;
+}
